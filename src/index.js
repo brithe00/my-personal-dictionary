@@ -5,12 +5,13 @@ import express from 'express';
 
 import { typeDefs } from './schema/schema.js';
 import { userResolvers } from './resolvers/user.js';
+import { postResolvers } from './resolvers/post.js';
 import { prisma } from './config/db.js';
 import { isAuthenticated } from './utils/auth.js';
 
 const server = new ApolloServer({
 	typeDefs,
-	resolvers: userResolvers,
+	resolvers: [userResolvers, postResolvers],
 	context: ({ req }) => {
 		const token = req.headers.authorization || '';
 		const user = isAuthenticated(token);
