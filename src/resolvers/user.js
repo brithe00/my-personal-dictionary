@@ -20,6 +20,14 @@ export const userResolvers = {
 				throw new Error('Unable to retrieve user data');
 			}
 		},
+		users: async (_, __, { prisma }) => {
+			return await prisma.user.findMany({});
+		},
+		user: async (_, { id }, { prisma }) => {
+			return await prisma.user.findUnique({
+				where: { id },
+			});
+		},
 	},
 	Mutation: {
 		signup: async (_, { username, email, password }, { prisma }) => {
